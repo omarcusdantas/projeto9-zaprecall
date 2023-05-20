@@ -8,7 +8,7 @@ export default function Bottom({answersList, cards}) {
     const finished = false;
 
     return (
-        <Container>
+        <Container data-test="footer">
             {finished &&
                 <div className="result">
                     <img src={sadImg} alt="" />

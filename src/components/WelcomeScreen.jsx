@@ -8,7 +8,7 @@ export default function WelcomeScreen({handleClick}) {
         <Container>
             <img src={logo} alt="ZapRecall" />
             <h1>ZapRecall</h1>
-            <button onClick={handleClick}>Iniciar Recall!</button>
+            <button onClick={handleClick} data-test="start-btn">Iniciar Recall!</button>
         </Container>
     );
 }

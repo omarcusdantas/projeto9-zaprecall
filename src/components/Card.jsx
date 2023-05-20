@@ -8,6 +8,7 @@ import rightImg from "../assets/icone_certo.png";
 
 export default function Card({number, cardInfo, handleClick}) {
     const [cardState, setCardState] = React.useState("back");
+    const [iconTestAttribute, setIconTestAttribute] = React.useState("zap-icon");
     const [resultImg, setResultImg] = React.useState(rightImg);
     const [resultStyle, setResultStyle] = React.useState({color: "#333333", decoration: "none"});
 
@@ -16,6 +17,7 @@ export default function Card({number, cardInfo, handleClick}) {
             setResultImg(wrongImg);
             setResultStyle({color: "#FF3030", decoration: "line-through"});
             handleClick("wrong");
+            setIconTestAttribute("no-icon");
             setCardState("result");
             return;
         }
@@ -23,6 +25,7 @@ export default function Card({number, cardInfo, handleClick}) {
             setResultImg(almostImg);
             setResultStyle({color: "#FF922E", decoration: "line-through"});
             handleClick("almost");
+            setIconTestAttribute("partial-icon");
             setCardState("result");
             return;
         }
@@ -33,36 +36,36 @@ export default function Card({number, cardInfo, handleClick}) {
     }
 
     return (
-        <>  
+        <div data-test="flashcard">  
             {cardState === "back" && 
                 <CardClosed style={resultStyle}>
-                <h3>Pergunta {number}</h3>
-                <img src={playImg} alt="Play" onClick={() => setCardState("question")} />
+                <h3 data-test="flashcard-text">Pergunta {number}</h3>
+                <img src={playImg} alt="Play" onClick={() => setCardState("question")} data-test="play-btn"/>
                 </CardClosed>
             }
             {cardState === "question" &&
                 <Question>
-                    <h3>{cardInfo.question}</h3>
-                    <img src={turnImg} alt="Turn" onClick={() => setCardState("answer")}/>
+                    <h3 data-test="flashcard-text">{cardInfo.question}</h3>
+                    <img src={turnImg} alt="Turn" onClick={() => setCardState("answer")} data-test="turn-btn"/>
                 </Question>
             }
             {cardState === "answer" &&
                 <Answer>
-                    <h3>{cardInfo.answer}</h3>
+                    <h3 data-test="flashcard-text">{cardInfo.answer}</h3>
                     <div className="card-menu">
-                        <button onClick={() => checkAnswer("wrong")}>Não lembrei</button>
-                        <button onClick={() => checkAnswer("almost")}>Quase não lembrei</button>
-                        <button onClick={() => checkAnswer("right")}>Zap!</button>
+                        <button onClick={() => checkAnswer("wrong")} data-test="no-btn">Não lembrei</button>
+                        <button onClick={() => checkAnswer("almost")} data-test="partial-btn">Quase não lembrei</button>
+                        <button onClick={() => checkAnswer("right")} data-test="zap-btn">Zap!</button>
                     </div>
                 </Answer>
             }
             {cardState === "result" && 
                 <CardClosed style={resultStyle}>
-                    <h3>Pergunta {number}</h3>
-                    <img src={resultImg} alt="Result"/>
+                    <h3 data-test="flashcard-text">Pergunta {number}</h3>
+                    <img src={resultImg} alt="Result" data-test={iconTestAttribute}/>
                 </CardClosed>
             }
-        </>
+        </div>
     );
 }
 
