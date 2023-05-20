@@ -4,12 +4,16 @@ import WelcomeScreen from "./WelcomeScreen.jsx";
 import GameScreen from "./GameScreen.jsx";
 
 export default function App() {
-    const isGameStarted = true;
+    const [isGameStarted, setIsGameStarted] = React.useState(false);
+
+    function startGame() {
+        setIsGameStarted(true);
+    }
 
     return (
         <>
             <GlobalStyle />
-            {!isGameStarted && <WelcomeScreen />}
+            {!isGameStarted && <WelcomeScreen handleClick={startGame} />}
             {isGameStarted && <GameScreen />}
         </>
     );

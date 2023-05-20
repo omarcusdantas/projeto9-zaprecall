@@ -2,18 +2,19 @@ import React from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 
-export default function WelcomeScreen() {
+export default function WelcomeScreen({handleClick}) {
 
     return (
         <Container>
             <img src={logo} alt="ZapRecall" />
             <h1>ZapRecall</h1>
-            <button>Iniciar Recall!</button>
+            <button onClick={handleClick}>Iniciar Recall!</button>
         </Container>
     );
 }
 
 const Container = styled.div`
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -2,33 +2,69 @@ import React from "react";
 import styled from "styled-components";
 import playImg from "../assets/seta_play.png";
 import turnImg from "../assets/seta_virar.png";
+import almostImg from "../assets/icone_quase.png";
+import wrongImg from "../assets/icone_erro.png";
+import rightImg from "../assets/icone_certo.png";
 
-export default function Card() {
+export default function Card({number, cardInfo}) {
+    const [cardState, setCardState] = React.useState("back");
+    const [resultImg, setResultImg] = React.useState(rightImg);
+    const [resultStyle, setResultStyle] = React.useState({color: "#333333", decoration: "none"})
+
+    function checkAnswer(result) {
+        if (result === "wrong") {
+            setResultImg(wrongImg);
+            setResultStyle({color: "#FF3030", decoration: "line-through"});
+            setCardState("result");
+            return;
+        }
+        else if (result === "almost") {
+            setResultImg(almostImg);
+            setResultStyle({color: "#FF922E", decoration: "line-through"});
+            setCardState("result");
+            return;
+        }
+        setResultStyle({color: "#2FBE34", decoration: "line-through"});
+        setCardState("result");
+        return;
+    }
 
     return (
-        <>
-            <CardClosed>
-                <h3>Pergunta 1</h3>
-                <img src={playImg} alt="Play" />
-            </CardClosed>
-            <Question>
-                <h3>Question</h3>
-                <img src={turnImg} alt="Play" />
-            </Question>
-            <Awnser>
-                <h3>Awnser</h3>
-                <div className="card-menu">
-                    <button>Não lembrei</button>
-                    <button>Quase não lembrei</button>
-                    <button>Zap!</button>
-                </div>
-            </Awnser>
+        <>  
+            {cardState === "back" && 
+                <CardClosed style={resultStyle}>
+                <h3>Pergunta {number}</h3>
+                <img src={playImg} alt="Play" onClick={() => setCardState("question")} />
+                </CardClosed>
+            }
+            {cardState === "question" &&
+                <Question>
+                    <h3>{cardInfo.question}</h3>
+                    <img src={turnImg} alt="Turn" onClick={() => setCardState("answer")}/>
+                </Question>
+            }
+            {cardState === "answer" &&
+                <Answer>
+                    <h3>{cardInfo.answer}</h3>
+                    <div className="card-menu">
+                        <button onClick={() => checkAnswer("wrong")}>Não lembrei</button>
+                        <button onClick={() => checkAnswer("almost")}>Quase não lembrei</button>
+                        <button onClick={() => checkAnswer("right")}>Zap!</button>
+                    </div>
+                </Answer>
+            }
+            {cardState === "result" && 
+                <CardClosed style={resultStyle}>
+                    <h3>Pergunta {number}</h3>
+                    <img src={resultImg} alt="Result"/>
+                </CardClosed>
+            }
         </>
     );
 }
 
 const CardContainer = styled.div`
-    min-width: 300px;
+    width: 300px;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
     border-radius: 5px;
     padding: 15px;
@@ -45,16 +81,17 @@ const CardClosed = styled(CardContainer)`
     align-items: center;
     min-height: 65px;
     background-color: #ffffff;
+    color: ${props => props.style.color};
 
     h3 {
         font-weight: 700;
         font-size: 16px;
-        text-decoration-line: line-through;
+        text-decoration: ${props => props.style.decoration};
     }
 `;
 
 const Question = styled(CardContainer)`
-    min-height: 131px;
+    min-height: 130px;
     background-color: #FFFFD4;
     position: relative;
 
@@ -71,7 +108,7 @@ const Question = styled(CardContainer)`
 
 `;
 
-const Awnser = styled(CardContainer)`
+const Answer = styled(CardContainer)`
     min-height: 131px;
     background-color: #FFFFD4;
     display: flex;

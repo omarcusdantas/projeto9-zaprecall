@@ -1,19 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import Card from "./Card.jsx";
+import cards from "../cards.js";
 
 export default function Deck() {
 
     return (
         <Container>
-            <Card></Card>
-            <Card></Card>
-            <Card></Card>
-            <Card></Card>
-            <Card></Card>
-            <Card></Card>
-            <Card></Card>
-            <Card></Card>
+            {cards.map((card, index) => (
+                <Card
+                    key={index}
+                    number={index+1}
+                    cardInfo={card}>
+                </Card>
+            ))}
         </Container>
     );
 }
