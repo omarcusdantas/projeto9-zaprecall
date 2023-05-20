@@ -3,8 +3,15 @@ import styled from "styled-components";
 import logo from "../assets/logo.png";
 import Bottom from "./Bottom.jsx";
 import Deck from "./Deck.jsx";
+import cards from "../cards.js";
 
 export default function GameScreen() {
+    const [answers, setAnswers] = React.useState([]);
+
+    function addAnswer(result) {
+        setAnswers([...answers, result]);
+        console.log([...answers, result]);
+    }
 
     return (
         <Container>
@@ -12,8 +19,8 @@ export default function GameScreen() {
                 <img src={logo} alt="ZapRecall" />
                 <h1>ZapRecall</h1>
             </div>
-            <Deck></Deck>
-            <Bottom></Bottom>
+            <Deck handleClick={addAnswer} cards={cards}></Deck>
+            <Bottom answersList={answers} cards={cards}></Bottom>
         </Container>
     );
 }

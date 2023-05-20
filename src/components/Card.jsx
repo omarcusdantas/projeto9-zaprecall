@@ -6,25 +6,28 @@ import almostImg from "../assets/icone_quase.png";
 import wrongImg from "../assets/icone_erro.png";
 import rightImg from "../assets/icone_certo.png";
 
-export default function Card({number, cardInfo}) {
+export default function Card({number, cardInfo, handleClick}) {
     const [cardState, setCardState] = React.useState("back");
     const [resultImg, setResultImg] = React.useState(rightImg);
-    const [resultStyle, setResultStyle] = React.useState({color: "#333333", decoration: "none"})
+    const [resultStyle, setResultStyle] = React.useState({color: "#333333", decoration: "none"});
 
     function checkAnswer(result) {
         if (result === "wrong") {
             setResultImg(wrongImg);
             setResultStyle({color: "#FF3030", decoration: "line-through"});
+            handleClick("wrong");
             setCardState("result");
             return;
         }
         else if (result === "almost") {
             setResultImg(almostImg);
             setResultStyle({color: "#FF922E", decoration: "line-through"});
+            handleClick("almost");
             setCardState("result");
             return;
         }
         setResultStyle({color: "#2FBE34", decoration: "line-through"});
+        handleClick("right")
         setCardState("result");
         return;
     }

@@ -4,20 +4,28 @@ import errorImg from "../assets/icone_erro.png";
 import rightImg from "../assets/icone_certo.png";
 import sadImg from "../assets/sad.png";
 
-export default function Bottom() {
+export default function Bottom({answersList, cards}) {
+    const finished = false;
 
     return (
         <Container>
-            <div className="result">
-                <img src={sadImg} alt="" />
-                <h4>Putz...</h4>
-            </div>
-            <p>Ainda faltam alguns...<br/>Mas não desanime!</p>
-            <h2>4/4 CONCLUÍDOS</h2>
-            <div className="awnsers">
-                <img src={rightImg} alt="" />
-                <img src={errorImg} alt="" />
-            </div>
+            {finished &&
+                <div className="result">
+                    <img src={sadImg} alt="" />
+                    <h4>Putz...</h4>
+                </div>
+                &&
+                <p>Ainda faltam alguns...<br/>Mas não desanime!</p>
+            }
+
+            <h2>{answersList.length}/{cards.length} CONCLUÍDOS</h2>
+
+            {finished &&
+                <div className="awnsers">
+                    <img src={rightImg} alt="" />
+                    <img src={errorImg} alt="" />
+                </div>
+            }
         </Container>
     );
 }

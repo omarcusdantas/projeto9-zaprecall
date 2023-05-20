@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Card from "./Card.jsx";
-import cards from "../cards.js";
 
-export default function Deck() {
+export default function Deck({handleClick, cards}) {
 
     return (
         <Container>
@@ -11,6 +10,7 @@ export default function Deck() {
                 <Card
                     key={index}
                     number={index+1}
+                    handleClick={handleClick}
                     cardInfo={card}>
                 </Card>
             ))}
