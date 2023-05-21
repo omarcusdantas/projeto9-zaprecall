@@ -130,6 +130,7 @@ const Answer = styled(CardContainer)`
     h3 {
         font-weight: 400;
         font-size: 18px;
+        margin-bottom: 10px;
     }
 
     button {

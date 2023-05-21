@@ -1,11 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 import errorImg from "../assets/icone_erro.png";
+import almostImg from "../assets/icone_quase.png";
 import rightImg from "../assets/icone_certo.png";
 import sadImg from "../assets/sad.png";
 
 export default function Bottom({answersList, cards}) {
-    const finished = false;
+    const [finished, setFinished] = React.useState(false);
+
+    const answersImg = answersList.map((answer) => {
+        if (answer === "right") {
+            return rightImg;
+        }
+        else if (answer === "almost") {
+            return almostImg;
+        }
+        return errorImg;
+    })
+
+    if (answersList.length === cards.length && finished === false) {
+        setFinished(true);
+    }
 
     return (
         <Container data-test="footer">
@@ -14,18 +29,19 @@ export default function Bottom({answersList, cards}) {
                     <img src={sadImg} alt="" />
                     <h4>Putz...</h4>
                 </div>
-                &&
+            }
+
+            {finished &&
                 <p>Ainda faltam alguns...<br/>Mas não desanime!</p>
             }
 
             <h2>{answersList.length}/{cards.length} CONCLUÍDOS</h2>
 
-            {finished &&
-                <div className="awnsers">
-                    <img src={rightImg} alt="" />
-                    <img src={errorImg} alt="" />
-                </div>
-            }
+            <div className="answers">
+                {answersImg.map((answer, index) => (
+                    <img src={answer} key={index} alt="Answer" />
+                ))}
+            </div>
         </Container>
     );
 }
@@ -55,7 +71,7 @@ const Container = styled.div`
         margin-top: 15px;
     }
 
-    .awnsers {
+    .answers {
         display: flex;
         gap: 5px;
         margin-bottom: 10px;
