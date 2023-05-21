@@ -4,42 +4,46 @@ import errorImg from "../assets/icone_erro.png";
 import almostImg from "../assets/icone_quase.png";
 import rightImg from "../assets/icone_certo.png";
 import sadImg from "../assets/sad.png";
+import allRightImg from "../assets/party.png"
 
 export default function Bottom({answersList, cards}) {
-    const [finished, setFinished] = React.useState(false);
+    const [finished, setFinished] = React.useState({status: false, allRight: true});
 
     const answersImg = answersList.map((answer) => {
         if (answer === "right") {
-            return rightImg;
+            return [rightImg, "zap-icon"];
         }
         else if (answer === "almost") {
-            return almostImg;
+            return [almostImg, "partial-icon"];
         }
-        return errorImg;
+        return [errorImg, "no-icon"];
     })
 
-    if (answersList.length === cards.length && finished === false) {
-        setFinished(true);
+    if (answersList.length === cards.length && finished.status === false) {
+        if (answersList.includes("wrong")) {
+            setFinished({status: true, allRight: false});
+            return;
+        }
+        setFinished({status: true, allRight: true});
     }
 
     return (
         <Container data-test="footer">
-            {finished &&
-                <div className="result">
-                    <img src={sadImg} alt="" />
-                    <h4>Putz...</h4>
+            {finished.status &&
+                <div data-test="finish-text">
+                    <div className="result">
+                        <img src={finished.allRight? allRightImg : sadImg} alt="Finished" />
+                        <h4>{finished.allRight? "Parabéns!" : "Putz..."}</h4>
+                    </div>
+                    <p>{finished.allRight? "Você não esqueceu de nenhum flashcard!" : "Ainda faltam alguns... Mas não desanime!"}</p>
                 </div>
-            }
-
-            {finished &&
-                <p>Ainda faltam alguns...<br/>Mas não desanime!</p>
             }
 
             <h2>{answersList.length}/{cards.length} CONCLUÍDOS</h2>
 
             <div className="answers">
                 {answersImg.map((answer, index) => (
-                    <img src={answer} key={index} alt="Answer" />
+                    <img src={answer[0]} key={index} data-test={answer[1]} alt="Answer" />
                 ))}
             </div>
         </Container>
@@ -67,6 +71,7 @@ const Container = styled.div`
     .result {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 13px;
         margin-top: 15px;
     }
@@ -84,6 +89,7 @@ const Container = styled.div`
         text-align: center;
         font-weight: 400;
         line-height: 21px;
+        width: 220px;
     }
 
     h4 {

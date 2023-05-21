@@ -10,7 +10,6 @@ export default function GameScreen() {
 
     function addAnswer(result) {
         setAnswers([...answers, result]);
-        console.log([...answers, result]);
     }
 
     return (
