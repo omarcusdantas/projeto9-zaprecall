@@ -6,8 +6,10 @@ import Deck from "./Deck.jsx";
 import cards from "../cards.js";
 
 export default function GameScreen() {
+    //State variable to save answers
     const [answers, setAnswers] = React.useState([]);
 
+    //Function to save answers
     function addAnswer(result) {
         setAnswers([...answers, result]);
     }
@@ -31,16 +33,16 @@ const Container = styled.div`
     justify-content: space-between;
 
     .logo {
+        background-color: #fb6b6b;
+        width: 100%;
+        height: 153px;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 27px;
-        height: 153px;
         position: fixed;
         top: 0;
         z-index: 1;
-        width: 100%;
-        background-color: #FB6B6B;
 
         img {
             width: 52px;

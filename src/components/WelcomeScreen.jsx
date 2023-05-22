@@ -1,14 +1,14 @@
-import React from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 
-export default function WelcomeScreen({handleClick}) {
-
+export default function WelcomeScreen({ handleClick }) {
     return (
         <Container>
             <img src={logo} alt="ZapRecall" />
             <h1>ZapRecall</h1>
-            <button onClick={handleClick} data-test="start-btn">Iniciar Recall!</button>
+            <button onClick={handleClick} data-test="start-btn">
+                Iniciar Recall!
+            </button>
         </Container>
     );
 }
@@ -33,14 +33,14 @@ const Container = styled.div`
     }
 
     button {
+        background-color: #ffffff;
+        color: #d70900;
         font-family: "Recursive";
         font-size: 18px;
         font-weight: 400;
-        background-color: #ffffff;
-        color: #D70900;
         width: 246px;
         height: 54px;
-        border: 1px solid #D70900;
+        border: 1px solid #d70900;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
         border-radius: 5px;
         cursor: pointer;
